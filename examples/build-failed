@@ -19,4 +19,4 @@ Message:
 $MESSAGE
 
 $OUTPUT
-" | mail -s "[example.org] BUILD FAILED $SHA" --to first@gmail.com second@gmail.com
+" | mail -s "[example.org] BUILD FAILED $SHA" --to andrew@travelpost.com

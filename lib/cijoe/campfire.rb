@@ -34,7 +34,7 @@ class CIJoe
     end
 
     def self.valid_config?
-      %w( subdomain user pass room ).all? do |key|
+      %w( subdomain room token ).all? do |key|
         !config[key.intern].empty?
       end
     end
