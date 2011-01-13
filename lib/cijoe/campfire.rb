@@ -27,8 +27,7 @@ class CIJoe
       campfire_config = Config.new('campfire', @project_path)
       @config ||= {
         :subdomain => campfire_config.subdomain.to_s,
-        :user      => campfire_config.user.to_s,
-        :pass      => campfire_config.pass.to_s,
+        :token     => ENV[campfire_config.tokenenv.to_s],
         :room      => campfire_config.room.to_s,
         :ssl       => campfire_config.ssl.to_s.strip == 'true'
       }
@@ -50,10 +49,7 @@ class CIJoe
     def room
       @room ||= begin
         config = Campfire.config
-        campfire = Tinder::Campfire.new(config[:subdomain],
-            :username => config[:user],
-            :password => config[:pass],
-            :ssl => config[:ssl] || false)
+        campfire = Tinder::Campfire.new(config[:subdomain], :token => config[:token])
         campfire.find_room_by_name(config[:room])
       end
     end
