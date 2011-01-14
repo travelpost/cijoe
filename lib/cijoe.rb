@@ -123,23 +123,23 @@ class CIJoe
   # update git then run the build
   def build!(branch=nil)
     @git_branch = branch
-    build = @current_build
+    current_build = @current_build
     output = ''
     git_update
-    build.sha = git_sha
-    write_build 'current', build
+    current_build.sha = git_sha
+    write_build 'current', current_build
 
     open_pipe("cd #{@project_path} && #{runner_command} 2>&1") do |pipe, pid|
       puts "#{Time.now.to_i}: Building #{build.short_sha}: pid=#{pid}"
 
-      build.pid = pid
-      write_build 'current', build
+      current_build.pid = pid
+      write_build 'current', current_build
       output = pipe.read
     end
 
-    Process.waitpid(build.pid)
+    Process.waitpid(current_build.pid)
     status = $?.exitstatus.to_i
-    puts "#{Time.now.to_i}: Built #{build.short_sha}: status=#{status}"
+    puts "#{Time.now.to_i}: Built #{current_build.short_sha}: status=#{status}"
 
     status == 0 ? build_worked(output) : build_failed('', output)
   rescue Object => e
